@@ -1,0 +1,299 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_content": "Skip to content"
+    },
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "404": {
+      "title": "404 Страница не найдена",
+      "subtext_html": "Запрашиваемая страница не найдена. Кликните <a href=\"\/collections\/all\">здесь<\/a>, чтобы продолжить покупки."
+    },
+    "password_page": {
+      "opening_soon": "Opening Soon",
+      "spread_the_word": "Spread the word",
+      "login_form_heading": "Войдите в магазин используя пароль",
+      "login_form_password_label": "Пароль",
+      "login_form_password_placeholder": "Ваш пароль",
+      "login_form_submit": "Войти",
+      "signup_form_heading": "Find out when we open",
+      "signup_form_email_label": "Email",
+      "signup_form_email_placeholder": "Ваш email",
+      "signup_form_submit": "Подтвердить",
+      "signup_form_success": "We will send you an email right before we open!",
+      "admin_link_html": "Вы владелец магазина? <a href=\"\/admin\">Вход здесь<\/a>",
+      "password_link": "Вход с помощью пароля",
+      "powered_by_shopify_html": "Этот магазин будет поддерживаться {{ shopify }}"
+    },
+    "social": {
+      "share_on_facebook": "Поделиться",
+      "share_on_twitter": "Твитнуть",
+      "share_on_pinterest": "Pin it",
+      "alt_text": {
+        "share_on_facebook": "Поделиться в Facebook",
+        "share_on_twitter": "Твитнуть в Twitter",
+        "share_on_pinterest": "Pin on Pinterest"
+      }
+    },
+    "search": {
+      "title": "Поиск товаров в нашем магазине",
+      "placeholder": "Поиск",
+      "submit": "Найти",
+      "heading": {
+        "one": "Результат поиска",
+        "other": "Результат поиска"
+      },
+      "results_with_count": {
+        "one": "{{ count }} товар найден по запросу \"{{ terms }}\"",
+        "other": "{{ count }} товар(ов) найдено по запросу \"{{ terms }}\""
+      },
+      "no_results_html": "Пожалуйста попытайтесь ввести другой поисковой запрос или вернитесь к <a href=\"\/\">главной странице<\/a>."
+    },
+    "newsletter_form": {
+      "newsletter_email": "Подпишитесь на нашу рассылку",
+      "email_placeholder": "Email",
+      "confirmation": "Благодарим за подписку",
+      "submit": "Подписаться"
+    }
+  },
+  "blogs": {
+    "article": {
+      "author_on_date_html": "Опубликовано {{ author }}. Дата публикации: {{ date }}",
+      "comment_meta_html": "{{ author }} {{ date }}",
+      "read_more": "Читать дальше",
+      "read_more_title": "Читать дальше: {{ title }}",
+      "by_author": "{{ author }}",
+      "tags": "Тэги"
+    },
+    "comments": {
+      "title": "Оставить комментарий",
+      "name": "Имя",
+      "email": "Email",
+      "message": "Сообщение",
+      "post": "Отправить",
+      "moderated": "Пожалуйста имейте ввиду, что комментарии будут проверены перед публикацией",
+      "success_moderated": "Ваш комментарий был одобрен. Мы опубликуем его через некоторое время, так как наш блог редактируется.",
+      "success": "Ваш комментарий принят! Спасибо!",
+      "with_count": {
+        "one": "{{ count }} комментарий",
+        "other": "{{ count }} комментариев"
+      }
+    },
+    "general": {
+      "categories": "Категории"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Корзина",
+      "remove": "Удалить",
+      "note": "Специальные инструкции для продавца",
+      "subtotal": "Итого",
+      "shipping_at_checkout": "Налоги включены в стоимость",
+      "shipping_at_minsum": "Минимальная сумма",
+      "update": "Обновить корзину",
+      "checkout": "Оформить заказ",
+      "empty": "Ваша корзина пуста.",
+      "cookies_required": "Включите куки для использования корзины",
+      "continue_browsing_html": "Продолжить покупки <a href=\"\/collections\/all\">здесь<\/a>.",
+      "item_quantity": "Количество единиц",
+      "savings": "You're saving"
+    },
+    "label": {
+      "product": "Товар",
+      "price": "Цена",
+      "quantity": "Количество",
+      "total": "Всего",
+      "discounted_price": "Цена со скидкой",
+      "original_price": "Цена"
+    }
+  },
+  "collections": {
+    "general": {
+      "no_matches": "Извините, в этой коллекции нет товаров",
+      "link_title": "Посмотрите нашу коллекцию: {{ title }}"
+    }
+  },
+  "contact": {
+    "form": {
+      "name": "Имя",
+      "email": "Email",
+      "phone": "Номер телефона",
+      "message": "Сообщение",
+      "send": "Отправить",
+      "post_success": "Спасибо за обращение к нам. Мы ответим как только сможем."
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "Мой аккаунт",
+      "details": "Детали аккаунта",
+      "view_addresses": "Смотреть адреса",
+      "return": "Возврат к деталям аккаунта"
+    },
+    "activate_account": {
+      "title": "Активация аккаунта",
+      "subtext": "Создайте пароль для активации аккаунта.",
+      "password": "Пароль",
+      "password_confirm": "Подтверждение пароля",
+      "submit": "Активировать аккаунт",
+      "cancel": "Отклонить"
+    },
+    "addresses": {
+      "title": "Ваши адреса",
+      "default": "Основной",
+      "add_new": "Добавить новый адрес",
+      "edit_address": "Редактировать адрес",
+      "first_name": "Имя",
+      "last_name": "Фамилия",
+      "company": "Организация",
+      "address1": "Адрес 1",
+      "address2": "Адрес 1",
+      "city": "Город",
+      "country": "Страна",
+      "province": "Область",
+      "zip": "Почтовый индекс",
+      "phone": "Телефон",
+      "set_default": "Установить основным адресом",
+      "add": "Добавить адрес",
+      "update": "Обновить адрес",
+      "cancel": "Отменить",
+      "edit": "Редактировать",
+      "delete": "Удалить",
+      "delete_confirm": "Вы уверены, что хотите удалить этот адрес?"
+    },
+    "login": {
+      "title": "Вход",
+      "email": "Email",
+      "password": "Пароль",
+      "forgot_password": "Забыли пароль?",
+      "sign_in": "Зарегистрироваться",
+      "cancel": "Вернутсья в магазин",
+      "guest_title": "Продолжить как гость",
+      "guest_continue": "Продолжить"
+    },
+    "orders": {
+      "title": "История заказов",
+      "order_number": "Заказ",
+      "date": "Дата",
+      "payment_status": "Статус оплаты",
+      "fulfillment_status": "Статус обработки",
+      "total": "Всего",
+      "none": "Вы пока ничего не заказывали."
+    },
+    "order": {
+      "title": "Заказ {{ name }}",
+      "date": "Оформлен {{ date }}",
+      "cancelled": "Заказ отменен {{ date }}",
+      "cancelled_reason": "Причина: {{ reason }}",
+      "billing_address": "Платежный адрес",
+      "payment_status": "Статус оплаты",
+      "shipping_address": "Адрес доставки",
+      "fulfillment_status": "Статус обработки",
+      "discount": "Скидка",
+      "shipping": "Доставка",
+      "tax": "Налог",
+      "product": "Товар",
+      "sku": "SKU",
+      "price": "Цена",
+      "quantity": "Количество",
+      "total": "Всего",
+      "fulfilled_at": "Дата обработки",
+      "track_shipment": "Отследить доставку",
+      "tracking_url": "Ссылка для отслеживания доставки",
+      "tracking_company": "Перевозчик",
+      "tracking_number": "Tracking номер",
+      "subtotal": "Итого"
+    },
+    "recover_password": {
+      "title": "Сброс Вашего пароля",
+      "email": "Email",
+      "submit": "Подтвердить",
+      "cancel": "Отменить",
+      "subtext": "Мы отправим Вам email для восстановления пароля.",
+      "success": "Мы отправили Вам email с ссылкой для обновления Вашего пароля."
+    },
+    "reset_password": {
+      "title": "Сброс пароля аккаунта",
+      "subtext": "Введите новый пароль для {{ email }}",
+      "password": "Пароль",
+      "password_confirm": "Подтверждение пароля",
+      "submit": "Сбросить пароль"
+    },
+    "register": {
+      "title": "Создание аккаунта",
+      "first_name": "Имя",
+      "last_name": "Фамилия",
+      "email": "Email",
+      "password": "Пароль",
+      "submit": "Создать",
+      "cancel": "Вернуться в магазин"
+    }
+  },
+  "homepage": {
+    "onboarding": {
+      "blog_title": "Заголовок Вашего сообщения",
+      "blog_excerpt": "В Вашем магазине еще не опубликованы посты. A blog can be used to talk about new product launches, tips, or other news you want to share with your customers. You can check out Shopify’s ecommerce blog for inspiration and advice for your own store and blog.",
+      "blog_author": "Имя автора",
+      "product_title": "Пример названия товара",
+      "collection_title": "Example Collection Title",
+      "no_content": "This section doesn’t currently include any content. Add content to this section using the sidebar."
+    }
+  },
+  "layout": {
+    "cart": {
+      "title": "Корзина",
+      "items_count": {
+        "one": "единица",
+        "other": "единиц"
+      }
+    },
+    "customer": {
+      "account": "Аккаунт",
+      "logged_in_as_html": "Авторизован(а) как {{ first_name }}",
+      "log_out": "Выйти",
+      "log_in": "Войти",
+      "create_account": "Создать аккаунт"
+    },
+    "footer": {
+      "social_platform": "{{ name }} on {{ platform }}",
+      "copyright": "Copyright",
+      "payment_methods": "Payment methods accepted"
+    },
+    "header": {
+      "collections": "Коллекции"
+    }
+  },
+  "products": {
+    "product": {
+      "regular_price": "Стандартная цена",
+      "sold_out": "Распродажа",
+      "unavailable": "Недоступен",
+      "on_sale": "В продаже",
+      "on_sale_from_html": "В продаже от {{ price }}",
+      "from_text_html": "От {{ price }}",
+      "quantity": "Количество",
+      "add_to_cart": "Добавить"
+    }
+  },
+  "gift_cards": {
+    "issued": {
+      "title": "Here's your {{ value }} gift card for {{ shop }}!",
+      "subtext": "Here's your gift card!",
+      "disabled": "Disabled",
+      "expired": "Expired on {{ expiry }}",
+      "active": "Expires on {{ expiry }}",
+      "redeem": "Use this code at checkout to redeem your gift card",
+      "shop_link": "Start shopping",
+      "print": "Print",
+      "remaining_html": "{{ balance }} left",
+      "add_to_apple_wallet": "Add to Apple Wallet",
+      "initial_value": "Gift card value: {{ value }}"
+    }
+  },
+  "date_formats": {
+    "month_day_year": "%B %d, %Y"
+  }
+}

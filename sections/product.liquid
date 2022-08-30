@@ -1,0 +1,298 @@
+<div data-section-id="{{ section.id }}" data-section-type="product" data-enable-history-state="true">
+
+	{%- assign current_variant = product.selected_or_first_available_variant -%}
+	{%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
+	{%- assign collection = Nil -%}
+	{%- for item in product.collections -%}
+		{%- assign collection = item -%}
+		{%- unless item.title == 'All products' or item.title == 'Home page' or item.title == 'All' -%}
+			{%- break -%}
+		{%- endunless -%}
+  		{%- comment -%}
+  		{%- unless item.title == 'Home page' -%}
+		  {%- break -%}
+		{%- endunless -%}
+  		{%- endcomment -%}
+	{%- endfor -%}
+
+
+	<div class="product-container">
+		<section class="slider-container">
+			<div class="product-slider">
+				{% for image in product.images %}
+					<img src="{{ image.src | img_url: '1024x' }}" data-item-index="{{ forloop.index0 }}" alt="{{ product.title }}">
+				{% endfor %}
+			</div>
+
+			<div class="thumbs">
+				{%- for image in product.images -%}
+					<div class="thumbs-item{% if forloop.index0 == 0 %} active{% endif %}" data-thumb-index="{{ forloop.index0 }}">
+						<img src="{{ image.src | img_url: '500x' }}" alt="{{ product.title }}">
+					</div>
+				{%- endfor -%}
+			</div>
+		</section>
+
+		<section class="info-container">
+			<h1 class="title">{{ product.title }}</h1>
+			<div data-price-wrapper class="price-wrapper">
+				<span data-product-price class="price">{{ current_variant.price | money }}</span>
+				{%- if collection -%}
+                  <a href="{{ collection.url }}"><span class="collection">{{ collection.title }}</span></a>
+				{%- endif -%}
+
+				{% if product.compare_at_price_max > product.price %}
+					<span class="visually-hidden" data-compare-text>{{ 'products.product.regular_price' | t }}</span>
+					<s data-compare-price>
+						{% if current_variant.compare_at_price > current_variant.price %}
+							{{ current_variant.compare_at_price | money }}
+						{% endif %}
+					</s>
+				{% endif %}
+			</div>
+			<form action="/cart/add" method="post" enctype="multipart/form-data">
+				<label hidden for="Quantity">{{ 'products.product.quantity' | t }}</label>
+				<input hidden type="number" id="Quantity" name="quantity" value="1" min="1">
+				<select name="id" class="no-js" data-product-select>
+					{% for variant in product.variants %}
+						<option
+								{% if variant == current_variant %}selected="selected"{% endif %}
+								{% unless variant.available %}disabled="disabled"{% endunless %}
+								value="{{ variant.id }}">
+							{{ variant.title }}
+						</option>
+					{% endfor %}
+				</select>
+				<button type="submit" class="button" name="add" data-add-to-cart {% unless current_variant.available %}disabled="disabled"{% endunless %}>
+					<span data-add-to-cart-text>
+						{% if current_variant.available %}
+							{{ 'products.product.add_to_cart' | t }}
+						{% else %}
+							{{ 'products.product.sold_out' | t }}
+						{% endif %}
+					</span>
+				</button>
+			</form>
+			<div class="description">
+				{{ product.description }}
+			</div>
+		</section>
+	</div>
+	{%- if section.settings.show_related_products -%}
+		<div class="related-products">
+			<h3 class="title">You may also like</h3>
+			<section class="collection-list">
+				{%- assign related_products_count = section.settings.related_products_count | plus: 1 -%}
+				{%- assign index = 0 -%}
+              
+				{%- for item in collection.products limit:related_products_count -%}
+					{% assign current_variant_id = item.first_available_variant.id %}
+					{% assign variant_count_in_cart = 0 %}
+					{% if cart.item_count != 0 %}
+						{% for item in cart.items %}
+							{% if item.variant_id == current_variant_id %}
+								{% assign variant_count_in_cart = item.quantity %}
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+					{% if item.id != product.id and index < section.settings.related_products_count %}
+						{%- assign index = index | plus: 1 -%}
+
+						<div class="collection-list-item-wrapper">
+							<a href="{{ item.url | within: collection }}" class="collection-list-item{% if variant_count_in_cart > 0 %} -enabled-actions{% endif %}" data-variant-id="{{ current_variant_id }}">
+							{% if item.featured_image != blank %}
+								<div class="collection-list__image">
+									<img src="{{ item.featured_image | img_url: '1024x' }}" alt="{{ item.title }}">
+
+									{% comment %}
+										{% include 'responsive-image' with
+											image: product.featured_image,
+											max_width: 480,
+											max_height: 480 %}
+									{% endcomment %}
+								</div>
+							{% endif %}
+
+							<div class="collection-list-item-text">
+								<p class="title">{{ item.title | escape }}</p>
+								<p class="price">
+									{% if item.compare_at_price > item.price %}
+										{% if item.price_varies %}
+											{%- assign sale_price = item.price | money -%}
+											{{ 'products.product.on_sale_from_html' | t: price: sale_price }}
+										{% else %}
+											{{ 'products.product.on_sale' | t }}
+											{{ item.price | money }}
+										{% endif %}
+									{% else %}
+										{% if item.price_varies %}
+											{%- assign price = item.price | money -%}
+											{{ 'products.product.from_text_html' | t: price: price }}
+										{% else %}
+											{{ item.price | money }}
+										{% endif %}
+									{% endif %}
+								</p>
+							</div>
+							<div class="cart-actions">
+								<div class="item minus{% if variant_count_in_cart == 0 %} -disabled{% endif %}" data-remove-cart-item></div>
+								<div class="item{% if variant_count_in_cart == 0 %} -disabled{% endif %}">{{ variant_count_in_cart }}</div>
+								<div class="item plus" data-add-cart-item></div>
+							</div>
+						</a>
+						</div>
+					{% endif %}
+				{%- endfor -%}
+			</section>
+		</div>
+	{% endif %}
+
+
+
+	{% comment %}
+
+		{% for image in product.images %}
+			{% capture wrapper_class %}
+				{%- unless featured_image == image -%}
+					hide
+				{%- endunless -%}
+			{% endcapture %}
+
+			{% include 'responsive-image' with
+				image: image,
+				max_width: 700,
+				max_height: 800,
+				image_attributes: "data-product-featured-image",
+				wrapper_class: wrapper_class,
+				wrapper_attributes: "data-product-image-wrapper", %}
+		{% endfor %}
+
+		{% if product.images.size > 1 %}
+			<ul>
+				{% for image in product.images %}
+					<li>
+						<a href="{{ image.src | img_url: '5760x' }}" data-thumbnail-id="{{ image.id }}"
+						   data-product-single-thumbnail>
+							<img class="product-single__thumbnail-image" src="{{ image.src | img_url: '500x' }}"
+								 alt="{{ image.alt | escape }}">
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+
+		<h1>{{ product.title }}</h1>
+		<p>{{ product.vendor }}</p>
+
+
+		<form action="/cart/add" method="post" enctype="multipart/form-data">
+			{% unless product.has_only_default_variant %}
+				{% for option in product.options_with_values %}
+					<div class="selector-wrapper js">
+						<label for="SingleOptionSelector-{{ forloop.index0 }}">
+							{{ option.name }}
+						</label>
+
+						<select
+								id="SingleOptionSelector-{{ forloop.index0 }}"
+								data-single-option-selector
+								data-index="option{{ option.position }}">
+							{% for value in option.values %}
+								<option
+										value="{{ value | escape }}"
+										{% if option.selected_value == value %}selected="selected"{% endif %}>
+									{{ value }}
+								</option>
+							{% endfor %}
+						</select>
+					</div>
+				{% endfor %}
+			{% endunless %}
+
+			<select name="id" class="no-js" data-product-select>
+				{% for variant in product.variants %}
+					<option
+							{% if variant == current_variant %}selected="selected"{% endif %}
+							{% unless variant.available %}disabled="disabled"{% endunless %}
+							value="{{ variant.id }}">
+						{{ variant.title }}
+					</option>
+				{% endfor %}
+			</select>
+
+			<label for="Quantity">{{ 'products.product.quantity' | t }}</label>
+			<input type="number" id="Quantity" name="quantity" value="1" min="1">
+
+			<div data-price-wrapper>
+				<span data-product-price>
+					{{ current_variant.price | money }}
+				</span>
+
+				{% if product.compare_at_price_max > product.price %}
+					<span class="visually-hidden" data-compare-text>{{ 'products.product.regular_price' | t }}</span>
+					<s data-compare-price>
+						{% if current_variant.compare_at_price > current_variant.price %}
+							{{ current_variant.compare_at_price | money }}
+						{% endif %}
+					</s>
+				{% endif %}
+			</div>
+
+			<button
+					type="submit"
+					name="add"
+					data-add-to-cart
+					{% unless current_variant.available %}disabled="disabled"{% endunless %}>
+			<span data-add-to-cart-text>
+				{% if current_variant.available %}
+				  {{ 'products.product.add_to_cart' | t }}
+				{% else %}
+				  {{ 'products.product.sold_out' | t }}
+				{% endif %}
+			</span>
+			</button>
+		</form>
+
+		<div class="rte">
+			{{ product.description }}
+		</div>
+
+		{% if section.settings.show_share_buttons %}
+			{% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
+		{% endif %}
+
+		{% unless product == empty %}
+			<script type="application/json" data-product-json>
+
+			</script>
+		{% endunless %}
+	{% endcomment %}
+</div>
+
+{% schema %}
+	{
+		"name": "Product pages",
+		"settings": [
+			{
+				"type": "checkbox",
+				"id": "show_share_buttons",
+				"label": "Show social sharing buttons",
+				"default": true
+			},
+			{
+				"type": "checkbox",
+				"id": "show_related_products",
+				"label": "Show related products",
+				"default": true
+			},
+			{
+				"type": "range",
+				"id": "related_products_count",
+				"label": "Related products count",
+				"min": 4,
+				"max": 50,
+				"default": 4
+			}
+		]
+	}
+{% endschema %}

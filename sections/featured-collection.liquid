@@ -1,0 +1,108 @@
+{%- comment -%}
+	This is a required section for the Shopify Theme Store.
+	It is available in the "Featured Collection" section in the theme editor.
+
+	Theme Store required settings
+	- Collection
+
+	Theme Store optional settings
+	- Heading: title of the featured collection section
+{%- endcomment -%}
+
+{%- assign collection = collections[section.settings.collection] -%}
+
+{% paginate collection.products by 32 %}
+
+	<section class="featured-collection collection-list">
+		{% comment %}
+			{% if section.settings.title != blank %}
+				<h2 class="featured-collection__title">{{ section.settings.title | escape }}</h2>
+			{% endif %}
+		{% endcomment %}
+
+		{% for product in collection.products %}
+			{% assign current_variant_id = product.first_available_variant.id %}
+			{% assign variant_count_in_cart = 0 %}
+			{% if cart.item_count != 0 %}
+				{% for item in cart.items %}
+					{% if item.variant_id == current_variant_id %}
+						{% assign variant_count_in_cart = item.quantity %}
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+
+			<div class="collection-list-item-wrapper">
+				<a href="{{ product.url | within: collection }}" class="collection-list-item{% if variant_count_in_cart > 0 %} -enabled-actions{% endif %}" data-variant-id="{{ current_variant_id }}">
+					{% if product.featured_image != blank %}
+						<div class="collection-list__image">
+							<img src="{{ product.featured_image | img_url: '300x300' }}" alt="{{ product.title }}">
+
+							{% comment %}
+							<img src="{{ product.featured_image | img_url: '5760x' }}" alt="{{ product.title }}">
+								{% include 'responsive-image' with
+									image: product.featured_image,
+									max_width: 480,
+									max_height: 480 %}
+							{% endcomment %}
+						</div>
+					{% endif %}
+					<div class="collection-list-item-text">
+						<p class="title">{{ product.title | escape }}</p>
+						<p class="price">
+							{% if product.compare_at_price > product.price %}
+								{% if product.price_varies %}
+									{%- assign sale_price = product.price | money -%}
+									{{ 'products.product.on_sale_from_html' | t: price: sale_price }}
+								{% else %}
+									{{ 'products.product.on_sale' | t }}
+									{{ product.price | money }}
+								{% endif %}
+							{% else %}
+								{% if product.price_varies %}
+									{%- assign price = product.price | money -%}
+									{{ 'products.product.from_text_html' | t: price: price }}
+								{% else %}
+									{{ product.price | money }}
+								{% endif %}
+							{% endif %}
+						</p>
+					</div>
+					<div class="cart-actions">
+						<div class="item minus{% if variant_count_in_cart == 0 %} -disabled{% endif %}" data-remove-cart-item></div>
+						<div class="item{% if variant_count_in_cart == 0 %} -disabled{% endif %}">{{ variant_count_in_cart }}</div>
+						<div class="item plus" data-add-cart-item></div>
+					</div>
+				</a>
+			</div>
+		{% endfor %}
+	</section>
+
+	{% if paginate.pages > 1 %}
+		{% include 'pagination' %}
+	{% endif %}
+{% endpaginate %}
+
+{% schema %}
+	{
+		"name": "Featured collection",
+		"settings": [
+			{
+				"type": "text",
+				"id": "title",
+				"label": "Heading",
+				"default": "Featured collection"
+			},
+			{
+				"id": "collection",
+				"type": "collection",
+				"label": "Collection"
+			}
+		],
+		"presets": [
+			{
+				"name": "Featured collection",
+				"category": "Collection"
+			}
+		]
+	}
+{% endschema %}

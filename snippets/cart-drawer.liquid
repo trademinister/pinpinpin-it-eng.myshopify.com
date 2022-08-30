@@ -1,0 +1,152 @@
+<div class="cart-drawer" id="cart-drawer">
+	<div class="cart">
+		<form id="cart-form" class="cart-form" action="/cart" method="post" novalidate>
+			<header>
+				<h1 class="title">{{ 'cart.general.title' | t }}</h1>
+
+				<svg class="close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="#FFFFFF" />
+					<path d="M0 0h24v24H0z" fill="none"/>
+				</svg>
+			</header>
+
+			<div class="items">
+				<div class="items-container">
+					{% for item in cart.items %}
+						<div class="item" data-variant-id="{{ item.variant_id }}">
+							<div class="item-wrapper">
+								<div class="image">{{ item | img_url: '65x65' | img_tag }}</div>
+								<div class="count">
+									<div class="count-wrapper">
+										<a class="title" href="{{ item.url }}">{{ item.product.title }}</a>
+										<input hidden type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0" aria-label="{{ 'cart.general.item_quantity' | t }}">
+										<div class="actions">
+											<div class="actions-wrapper">
+												<button class="action minus">&#x2012;</button>
+												<div class="number">{{ item.quantity }}</div>
+												<button class="action plus">+</button>
+											</div>
+                                            <div class="price">{{ item.line_price | money }}</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+
+			<div class="checkout-wrapper">
+				<div class="subtotal">
+					<div class="title">{{ 'cart.general.subtotal' | t }}</div>
+					<div class="value">{{ cart.total_price | money }}</div>
+				</div>
+              {% assign pin_min_order_sum = settings.minimum_order | plus:0 | times: 100 %}
+				<p class="shipping">{{ 'cart.general.shipping_at_minsum' | t }} {{pin_min_order_sum | money}}</p>
+				<p class="shipping">{{ 'cart.general.shipping_at_checkout' | t }}</p>
+				{%- assign cart_total_price = cart.original_total_price | divided_by: 100 -%}
+				{%- include 'trm_agree_personal_data_transition' -%}
+				<input type="submit" class="button checkout" name="checkout" value="{{ 'cart.general.checkout' | t }}"{% if cart_total_price < settings.minimum_order %} disabled="disabled"{% endif %}>
+                <script>
+                  function checkAllConditions(totalSum) {
+                    (totalSum >= {{settings.minimum_order}} && $('#cbx')[0].checked) ? $($('input[name="checkout"]')[0]).prop('disabled', false) : $($('input[name="checkout"]')[0]).prop('disabled', true);
+                  }
+                  $('#cbx').on('change', function() {checkAllConditions(parseInt($('#cart-form .subtotal .value').text().slice(0, -2).replace(/[,.]/, '')))});
+                </script>
+			</div>
+
+			{% comment %}
+
+				<table class="responsive-table">
+					<thead class="small--hide">
+					<tr>
+						<th colspan="2">{{ 'cart.label.product' | t }}</th>
+						<th>{{ 'cart.label.price' | t }}</th>
+						<th>{{ 'cart.label.quantity' | t }}</th>
+						<th>{{ 'cart.label.total' | t }}</th>
+					</tr>
+					</thead>
+					<tbody>
+
+					{% for item in cart.items %}
+
+					{% comment %}
+
+					Cart Item Template
+					=====================
+					The data-label attributes on
+					<td> elements are mobile-friendly
+						helpers used for responsive-table labels
+						{% endcomment %}
+
+						<tr class="responsive-table-row">
+
+							<td data-label="{{ 'customer.order.product' | t }}">
+
+								{% if item.image != blank %}
+									<a href="{{ item.url | within: collections.all }}">
+										{{ item | img_url: '240x240' | img_tag: item.title }}
+									</a>
+								{% endif %}
+
+							</td>
+							<td>
+								<a href="{{ item.url }}">{{ item.product.title }}</a>
+
+								{% unless item.product.has_only_default_variant %}
+									<p>{{ item.variant.title }}</p>
+								{% endunless %}
+
+								<p>{{ item.vendor }}</p>
+
+								{%- assign property_size = item.properties | size -%}
+
+								{% if property_size > 0 %}
+									{% for p in item.properties %}
+										{% unless p.last == blank %}
+											{{ p.first }}:
+
+											{% if p.last contains '/uploads/' %}
+												<a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+											{% else %}
+												{{ p.last }}
+											{% endif %}
+
+										{% endunless %}
+									{% endfor %}
+								{% endif %}
+
+								<a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">
+									<small>{{ 'cart.general.remove' | t }}</small>
+								</a>
+							</td>
+							<td data-label="{{ 'cart.label.price' | t }}">
+								{% if item.original_line_price != item.line_price %}
+									<span class="visually-hidden">{{ 'cart.label.discounted_price' | t }}</span>
+									{{ item.price | money }}
+									<span class="visually-hidden">{{ 'cart.label.original_price' | t }}</span>
+									<s>{{ item.original_price | money }}</s>
+								{% else %}
+									{{ item.price | money }}
+								{% endif %}
+							</td>
+							<td data-label="{{ 'cart.label.quantity' | t }}">
+								<input type="number"
+									   name="updates[]"
+									   id="updates_{{ item.key }}"
+									   value="{{ item.quantity }}"
+									   min="0"
+									   aria-label="{{ 'cart.general.item_quantity' | t }}">
+							</td>
+							<td data-label="{{ 'cart.label.total' | t }}">
+								{{ item.line_price | money }}
+							</td>
+						</tr>
+
+						{% endfor %}
+					</tbody>
+				</table>
+			{% endcomment %}
+		</form>
+	</div>
+</div>

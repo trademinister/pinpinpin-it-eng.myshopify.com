@@ -1,0 +1,89 @@
+<!doctype html>
+<!--[if IE 9]>
+<html class="ie9 no-js supports-no-cookies" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html class="no-js supports-no-cookies" lang="{{ shop.locale }}"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="theme-color" content="{{ settings.color_accent }}">
+	<link rel="canonical" href="{{ canonical_url }}">
+
+	{%- if settings.favicon != blank -%}
+		<link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+	{%- endif -%}
+
+	{%- capture seo_title -%}
+		{{ page_title }}
+		{%- if current_tags -%}
+			{%- assign meta_tags = current_tags | join: ', ' -%} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+		{%- endif -%}
+		{%- if current_page != 1 -%}
+			&ndash; {{ 'general.meta.page' | t: page: current_page }}
+		{%- endif -%}
+	{%- assign escaped_page_title = page_title | escape -%}
+		{%- unless escaped_page_title contains shop.name -%}
+			&ndash; {{ shop.name }}
+		{%- endunless -%}
+	{%- endcapture -%}
+	<title>{{ seo_title | strip }}</title>
+
+	{%- if page_description -%}
+		<meta name="description" content="{{ page_description | escape }}">
+	{%- endif -%}
+
+	{%- include 'social-meta-tags' -%}
+	{%- include 'style-tags' -%}
+	{%- include 'css-variables' -%}
+  
+  	<style>
+      section.collection-list p.title { margin-top: 15px !important; }
+      div.collection-list p.title { margin-top: 15px !important; }
+    </style>
+
+	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+	<script>
+		document.documentElement.className = document.documentElement.className.replace('no-js', '')
+
+		window.theme = {
+			strings: {
+				addToCart: {{ 'products.product.add_to_cart' | t | json }},
+				cartHeader: {{ 'layout.cart.title' | t | json }},
+				cartItemQuantity: {{ 'cart.general.item_quantity' | t | json }},
+				soldOut: {{ 'products.product.sold_out' | t | json }},
+				unavailable: {{ 'products.product.unavailable' | t | json }}
+			},
+			minimumOrder: {{ settings.minimum_order }},
+			moneyFormat: {{ shop.money_format | json }}
+		}
+	</script>
+
+	{%- include 'script-tags', layout: 'theme' -%}
+
+	{{ content_for_header }}
+
+  {% render 'easy-gdpr-settings' %}
+</head>
+
+<body id="{{ page_title | handle }}" class="template-{{ template.name | handle }}">
+
+<a class="in-page-link visually-hidden skip-link"
+   href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+
+{% include 'cart-drawer' %}
+
+<div class="main-wrapper">
+	{% section 'header' %}
+
+	<main role="main" id="MainContent">
+		{{ content_for_layout }}
+	</main>
+</div>
+
+{% section 'footer' %}
+
+</body>
+</html>

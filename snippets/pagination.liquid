@@ -1,0 +1,30 @@
+<div class="pagination">
+  {% if paginate.pages > 0 %}
+    {% if paginate.previous.is_link %}
+      <span class="item previous">
+        <a href="{{ paginate.previous.url }}">
+            {% include "icon-arrow-left" %}
+        </a>
+      </span>
+    {% endif %}
+
+    {% for part in paginate.parts %}
+      <span class="item {% if forloop.index == paginate.current_page %}current{% endif %}">
+        {% if part.is_link %}{{ part.title | link_to: part.url}}{% else %}{{ part.title }}{% endif %}
+      </span>
+    {% endfor %}
+
+    {% if paginate.next.is_link %}
+      <span class="item next">
+        <a href="{{ paginate.next.url }}">
+            {% include "icon-arrow-right" %}
+        </a>
+      </span>
+    {% endif %}
+
+  {% endif %}
+
+  {% comment %}
+    {{ paginate | default_pagination }}
+  {% endcomment %}
+</div>

@@ -1,0 +1,101 @@
+<style>
+  {{ settings.font_heading | font_face }}
+  {{ settings.font_body | font_face }}
+
+  {%- assign font_body_bold = settings.font_body | font_modify: 'weight', 'bolder' -%}
+  {%- assign font_body_bold_italic = font_body_bold | font_modify: 'style', 'italic' -%}
+
+  {{ font_body_bold | font_face }}
+  {{ font_body_bold_italic | font_face }}
+
+  @font-face {
+    font-family: 'icons';
+    src: url('{{ "../assets/fonts/icons.eot" | asset_url }}');
+    src: url('{{ "../assets/fonts/icons.eot" | asset_url }}#iefix') format("embedded-opentype"),
+    url('{{ "../assets/fonts/icons.woff" | asset_url }}') format("woff"),
+    url('{{ "../assets/fonts/icons.ttf" | asset_url }}') format("truetype"),
+    url('{{ "../assets/fonts/icons.svg" | asset_url }}#shop-icons') format("svg");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  /* Franklin Gothic */
+  @font-face {
+    font-family: 'Franklin Gothic';
+    src: url('{{ "../assets/fonts/FranklinGothicBookC.eot" | asset_url }}');
+    src: url('{{ "../assets/fonts/FranklinGothicBookC.eot" | asset_url }}#iefix') format("embedded-opentype"),
+    url('{{ "../assets/fonts/FranklinGothicBookC.woff" | asset_url }}') format("woff"),
+    url('{{ "../assets/fonts/FranklinGothicBookC.ttf" | asset_url }}') format("truetype"),
+    url('{{ "../assets/fonts/FranklinGothicBookC.svg" | asset_url }}') format("svg");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Franklin Gothic';
+    src: url('{{ "../assets/fonts/FranklinGothicBookC-Italic.eot" | asset_url }}');
+    src: url('{{ "../assets/fonts/FranklinGothicBookC-Italic.eot" | asset_url }}#iefix') format("embedded-opentype"),
+    url('{{ "../assets/fonts/FranklinGothicBookC-Italic.woff" | asset_url }}') format("woff"),
+    url('{{ "../assets/fonts/FranklinGothicBookC-Italic.ttf" | asset_url }}') format("truetype"),
+    url('{{ "../assets/fonts/FranklinGothicBookC-Italic.svg" | asset_url }}') format("svg");
+    font-weight: normal;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: 'Franklin Gothic';
+    src: url('{{ "../assets/fonts/FranklinGothicMediumC.eot" | asset_url }}');
+    src: url('{{ "../assets/fonts/FranklinGothicMediumC.eot" | asset_url }}#iefix') format("embedded-opentype"),
+    url('{{ "../assets/fonts/FranklinGothicMediumC.woff" | asset_url }}') format("woff"),
+    url('{{ "../assets/fonts/FranklinGothicMediumC.ttf" | asset_url }}') format("truetype"),
+    url('{{ "../assets/fonts/FranklinGothicMediumC.svg" | asset_url }}') format("svg");
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Franklin Gothic';
+    src: url('{{ "../assets/fonts/FranklinGothicMediumC-Italic.eot" | asset_url }}');
+    src: url('{{ "../assets/fonts/FranklinGothicMediumC-Italic.eot" | asset_url }}#iefix') format("embedded-opentype"),
+    url('{{ "../assets/fonts/FranklinGothicMediumC-Italic.woff" | asset_url }}') format("woff"),
+    url('{{ "../assets/fonts/FranklinGothicMediumC-Italic.ttf" | asset_url }}') format("truetype"),
+    url('{{ "../assets/fonts/FranklinGothicMediumC-Italic.svg" | asset_url }}') format("svg");
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: 'Franklin Gothic';
+    src: url('{{ "../assets/fonts/FranklinGothicDemiC.eot" | asset_url }}');
+    src: url('{{ "../assets/fonts/FranklinGothicDemiC.eot" | asset_url }}#iefix') format("embedded-opentype"),
+    url('{{ "../assets/fonts/FranklinGothicDemiC.woff" | asset_url }}') format("woff"),
+    url('{{ "../assets/fonts/FranklinGothicDemiC.ttf" | asset_url }}') format("truetype"),
+    url('{{ "../assets/fonts/FranklinGothicDemiC.svg" | asset_url }}') format("svg");
+    font-weight: 900;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Franklin Gothic';
+    src: url('{{ "../assets/fonts/FranklinGothicDemiC-Italic.eot" | asset_url }}');
+    src: url('{{ "../assets/fonts/FranklinGothicDemiC-Italic.eot" | asset_url }}#iefix') format("embedded-opentype"),
+    url('{{ "../assets/fonts/FranklinGothicDemiC-Italic.woff" | asset_url }}') format("woff"),
+    url('{{ "../assets/fonts/FranklinGothicDemiC-Italic.ttf" | asset_url }}') format("truetype"),
+    url('{{ "../assets/fonts/FranklinGothicDemiC-Italic.svg" | asset_url }}') format("svg");
+    font-weight: 900;
+    font-style: italic;
+  }
+
+  :root {
+    --color-accent: {{ settings.color_accent }};
+    --color-body-text: {{ settings.color_body_text }};
+    --color-main-background: {{ settings.color_main_bg }};
+    --color-border: {{ settings.color_body_text | color_lighten: 50 }};
+
+    --font-heading: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+    --font-body: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+    --font-body-weight: {{ settings.font_body.weight }};
+    --font-body-style: {{ settings.font_body.style }};
+    --font-body-bold-weight: {{ font_body_bold.weight | default: 'bold' }};
+  }
+</style>
